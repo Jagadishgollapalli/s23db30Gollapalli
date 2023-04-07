@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= "Applied Computer Science"
+  p Welcome to #{title}
+  button(type="button", class="btn btn-primary" onclick = "doReduce()") Press Me
+  div(id="reduce") Reduce the value
+  script.
+    var count = 20
+    var change = -1
+    function doReduce(){
+      count = count + change
+      change = change -1
+      document.getElementById("reduce").innerText = `Count ${count} with change ${change}`
+    }
+
+  //- var attr = ['schoolName','schoolLocation','schoolLocation'] 
+  a(href='/schools') Click here to search for schools
+    
