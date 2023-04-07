@@ -1,6 +1,4 @@
-# s23wb30Gollapalli
+# s23db30Gollapalli
 
 ## Hi, I am Jagadish Gollapalli
  
-- class: school
-- Attributes: schoolName(string), schoolLocation(string), schoolCourses(number)
