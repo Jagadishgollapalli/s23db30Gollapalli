@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  h1= title
+  - let universities=results
+  button.btn( class="btn-primary ml-1", onclick= destinationcreate) Create
+  div(class="container-fluid")
+  div(class="row m-1")
+    each University in universities
+      - let destinationupdate = `dispatch(\"/universities/update?id=${University._id}\")`
+      - let destinationcreate = `dispatchCreate(\"/universities/create\")`
+      - let destinationdelete = `dispatchDelete(\"/universities/delete?id=${University._id}\")`
+      - let destinationdetail = `dispatch(\"/universities/detail/?id=${University._id}\")`
+      div(class="col-ml-1 btn btn-light") #{University._id} - #{University.University_name} - #{University.City} - #{University.Students}
+
+          button.btn( class="btn-secondary ml-1", onclick= destinationdetail) Details 
+
+          button.btn( class="btn-info ml-1", onclick= destinationupdate) Update
+
+          button.btn( class="btn-danger ml-1", onclick= destinationdelete) Delete
+  script.
+      function dispatch(path){
+      window.location.href=path
+      }
+      function buy(itemNo)
+      {
+        alert(`You purchased Item ${itemNo+1}`)
+      }
+      function dispatchCreate(path){
+        window.location.href=path
+      }
+      function dispatchDelete(path){
+        window.location.href=path
+      }

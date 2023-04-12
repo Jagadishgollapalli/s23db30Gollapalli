@@ -1,0 +1,23 @@
+extends layout 
+ 
+block content 
+  h1= title 
+  if (toShow == null)
+    h2 No instance to provide details
+  - let universityId = toShow._id 
+  - let university_name = toShow.University_name 
+  - let City = toShow.City 
+  - let Students = toShow.Students 
+  div 
+    div.row 
+      div(class='uniAttr mr-3') University ID is: 
+      div #{universityId} 
+    div.row 
+      div(class='uniAttr mr-3') university_name is: 
+      div #{university_name} 
+    div.row 
+      div(class='uniAttr mr-3') City is: 
+      div #{City} 
+    div.row 
+      div(class='uniAttr mr-3') Students are: 
+      div #{Students}
