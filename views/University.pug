@@ -3,7 +3,7 @@ extends layout
 block content
   h1= title
   - let universities=results
-  button.btn( class="btn-primary ml-1", onclick= destinationcreate) Create
+  //- button.btn( class="btn-primary ml-1", onclick= destinationcreate) Create
   div(class="container-fluid")
   div(class="row m-1")
     each University in universities
@@ -13,6 +13,8 @@ block content
       - let destinationdetail = `dispatch(\"/universities/detail/?id=${University._id}\")`
       div(class="col-ml-1 btn btn-light") #{University._id} - #{University.University_name} - #{University.City} - #{University.Students}
 
+          button.btn( class="btn-primary ml-1", onclick= destinationcreate) Create
+          
           button.btn( class="btn-secondary ml-1", onclick= destinationdetail) Details 
 
           button.btn( class="btn-info ml-1", onclick= destinationupdate) Update

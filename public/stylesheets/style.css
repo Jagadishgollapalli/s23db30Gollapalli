@@ -6,3 +6,32 @@ body {
 a {
   color: #00B7FF;
 }
+.uniAttr {
+  background-color: aquamarine;
+  width: 180px;
+  margin-left: 1%;
+  margin-top: 5px;
+  font-size: 15px;
+  font-weight: bold ;
+  }
+.details {
+    background-color: rgb(244, 152, 152);
+    width: 250px;
+    margin-top: 5px;
+    margin-left: 2%;
+    font-size: 15px;
+    font-weight: bold ;
+    white-space: nowrap;
+    }
+
+.row{
+  white-space: nowrap;
+}
+h1{
+  background-color: bisque;
+  color: black;
+  border: 3px dashed rgb(65, 65, 116);
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold ;
+}
