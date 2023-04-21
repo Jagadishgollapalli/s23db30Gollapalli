@@ -12,7 +12,8 @@ var selectorRouter = require("./routes/selector");
 var resourceRouter = require("./routes/resource");
 var universityRouter = require("./routes/University");
 var University = require("./models/University");
-
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy
 var app = express();
 
 require("dotenv").config();
@@ -107,6 +108,36 @@ app.use("/Universities", universityRouter);
 app.use(function (req, res, next) {
   next(createError(404));
 });
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+  Account.findOne({ username: username }, function (err, user) {
+  if (err) { return done(err); }
+  if (!user) {
+  return done(null, false, { message: 'Incorrect username.' });
+  }
+  if (!user.validPassword(password)) {
+  return done(null, false, { message: 'Incorrect password.' });
+  }
+  return done(null, user);
+  });
+  }));
+
+  app.use(require('express-session')({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+    }));
+    app.use(passport.initialize());
+    app.use(passport.session());
+   
+    // passport config
+// Use the existing connection
+// The Account model
+var Account =require('./models/account');
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
 
 // error handler
 app.use(function (err, req, res, next) {
