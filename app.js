@@ -3,7 +3,22 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy
+var app = express();
+const session = require('express-session');
 
+//app.use(require('serve-static')(__dirname + '/../../public'));
+
+app.use(require('cookie-parser')());
+//app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('express-session')({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var schoolRouter = require("./routes/school");
@@ -12,9 +27,7 @@ var selectorRouter = require("./routes/selector");
 var resourceRouter = require("./routes/resource");
 var universityRouter = require("./routes/University");
 var University = require("./models/University");
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy
-var app = express();
+
 
 require("dotenv").config();
 const connectionString = process.env.MONGO_CON;
@@ -91,8 +104,8 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
 
+app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/resource/University", resourceRouter);
 app.use("/users", usersRouter);
@@ -103,11 +116,6 @@ app.use("/resource", resourceRouter);
 app.use("/University", resourceRouter);
 //app.use('/Universities', resourceRouter);
 app.use("/Universities", universityRouter);
-
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
@@ -123,21 +131,18 @@ passport.use(new LocalStrategy(
   });
   }));
 
-  app.use(require('express-session')({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false
-    }));
-    app.use(passport.initialize());
-    app.use(passport.session());
-   
-    // passport config
+
+// passport config
 // Use the existing connection
 // The Account model
 var Account =require('./models/account');
 passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
 
 // error handler
 app.use(function (err, req, res, next) {

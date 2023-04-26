@@ -19,13 +19,23 @@ router.get("/University/:id", University_controller.university_detail);
 /* GET detail costume page */
 router.get("/detail", University_controller.University_view_one_Page);
 
+/* GET create update page */
+// redirect to login.
+const secured = (req, res, next) => {
+    if (req.user){
+    return next();
+    }
+    req.session.returnTo = req.originalUrl;
+    res.redirect("/login");
+    }
+
 /* GET create costume page */
-router.get("/create", University_controller.University_create_Page);
+router.get("/create",secured, University_controller.University_create_Page);
 
 /* GET create update page */
-router.get("/update", University_controller.University_update_Page);
+router.get("/update",secured, University_controller.University_update_Page);
 
 /* GET delete costume page */
-router.get("/delete", University_controller.University_delete_Page);
+router.get("/delete",secured, University_controller.University_delete_Page);
 
 module.exports = router;

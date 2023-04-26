@@ -1,4 +1,7 @@
 var University = require("../models/University");
+var express = require("express");
+var router = express.Router(); 
+
 // List of all university
 exports.university_list = async function (req, res) {
   try {
